@@ -493,6 +493,18 @@ var observer = new IntersectionObserver(function(entries){
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
 </script>
-
+// Rastreamento para o Google Tag Manager
+window.dataLayer = window.dataLayer || [];
+document.querySelectorAll('a[href*="wa.me"], a[href^="tel:"]').forEach(function(a){
+  a.addEventListener('click', function(){
+    var sec = a.closest('section, nav, footer');
+    var local = a.classList.contains('wa-float') ? 'botao_flutuante' : (sec ? (sec.id || sec.tagName.toLowerCase()) : 'pagina');
+    window.dataLayer.push({
+      event: a.href.indexOf('tel:') === 0 ? 'telefone_click' : 'whatsapp_click',
+      click_location: local,
+      click_url: a.href
+    });
+  });
+});
 </body>
 </html>
